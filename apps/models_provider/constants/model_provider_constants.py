@@ -24,6 +24,7 @@ from models_provider.impl.wenxin_model_provider.wenxin_model_provider import Wen
 from models_provider.impl.xf_model_provider.xf_model_provider import XunFeiModelProvider
 from models_provider.impl.xinference_model_provider.xinference_model_provider import XinferenceModelProvider
 from models_provider.impl.zhipu_model_provider.zhipu_model_provider import ZhiPuModelProvider
+from models_provider.impl.openrouter_model_provider.openrouter_model_provider import OpenRouterModelProvider
 
 
 class ModelProvideConstants(Enum):
@@ -48,3 +49,4 @@ class ModelProvideConstants(Enum):
     model_anthropic_provider = AnthropicModelProvider()
     model_siliconCloud_provider = SiliconCloudModelProvider()
     model_regolo_provider = RegoloModelProvider()
+    model_openrouter_provider = OpenRouterModelProvider()

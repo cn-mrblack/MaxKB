@@ -31,6 +31,21 @@ class LocalEmbeddingCredential(BaseForm, BaseModelCredential):
                 else:
                     return False
         try:
+            # 检查模型文件是否为Git LFS指针文件
+            import os
+            model_path = model_name
+            if os.path.isdir(model_path):
+                # 检查主要模型文件
+                for file_name in ['pytorch_model.bin', 'model.safetensors']:
+                    file_path = os.path.join(model_path, file_name)
+                    if os.path.exists(file_path):
+                        # 以二进制模式读取文件开头，避免UTF-8解码错误
+                        with open(file_path, 'rb') as f:
+                            content = f.read(100)  # 只读取前100字节检查
+                        if content.startswith(b'version https://git-lfs.github.com/spec/v1'):
+                            raise AppApiException(ValidCode.valid_error.value,
+                                                  gettext('Model files are Git LFS pointer files, not actual model data. Please install git-lfs and run `git lfs pull` or download model files directly.'))
+            
             model: LocalEmbedding = provider.get_model(model_type, model_name, model_credential)
             model.embed_query(gettext('Hello'))
         except Exception as e:
