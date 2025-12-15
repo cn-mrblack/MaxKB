@@ -130,22 +130,7 @@
             </template>
           </el-dropdown>
         </el-dropdown-item>
-        <el-dropdown-item
-          @click="openAbout"
-          v-if="
-              hasPermission(
-                new ComplexPermission(
-                  [RoleConst.ADMIN, RoleConst.USER, RoleConst.WORKSPACE_MANAGE],
-                  [PermissionConst.ABOUT_READ],
-                  [],
-                  'OR',
-                ),
-                'OR',
-              )
-            "
-        >
-          {{ $t('layout.about.title') }}
-        </el-dropdown-item>
+
 
         <el-dropdown-item class="border-t" @click="logout">
           {{ $t('layout.logout') }}
@@ -155,7 +140,7 @@
   </el-dropdown>
   <APIKeyDialog :user-id="user.userInfo?.id" ref="APIKeyDialogRef"/>
   <ResetPassword ref="resetPasswordRef"></ResetPassword>
-  <AboutDialog ref="AboutDialogRef"></AboutDialog>
+
 
   <!-- <UserPwdDialog ref="UserPwdDialogRef" /> -->
 </template>
@@ -165,7 +150,7 @@ import useStore from '@/stores'
 import { useRouter } from 'vue-router'
 import {t} from "@/locales"
 import ResetPassword from './ResetPassword.vue'
-import AboutDialog from './AboutDialog.vue'
+
 // import UserPwdDialog from '@/views/user-manage/component/UserPwdDialog.vue'
 import APIKeyDialog from './APIKeyDialog.vue'
 import {ComplexPermission} from '@/utils/permission/type'
@@ -176,7 +161,7 @@ import {PermissionConst, RoleConst, EditionConst} from '@/utils/permission/data'
 const {user, login} = useStore()
 const router = useRouter()
 
-const AboutDialogRef = ref()
+
 const APIKeyDialogRef = ref()
 const resetPasswordRef = ref<InstanceType<typeof ResetPassword>>()
 
@@ -185,9 +170,7 @@ const changeLang = (lang: string) => {
   user.postUserLanguage(lang)
   // changeLocale(lang)
 }
-const openAbout = () => {
-  AboutDialogRef.value?.open()
-}
+
 
 function openAPIKeyDialog() {
   APIKeyDialogRef.value.open()
